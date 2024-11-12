@@ -1,7 +1,7 @@
 # Project Name: Messenger
 
 ## Description
-**Messenger** is a Discord app clone, inspired by Discord, that provides an intuitive interface for text messaging. The app supports real-time communication with instant messaging and group chats.
+**Messenger** is a chat application inspired by Discord, that provides an intuitive interface for text messaging. The app supports real-time communication with instant messaging and group chats.
 
 ## Features
 - **Instant Messaging**: Send and receive text messages in real time.
@@ -77,6 +77,7 @@
 - **Backend**: Node.js, Express
 - **WebSocket**: Socket.io for real-time communication
 - **Database**: MongoDB (if needed for storing user data)
+- **Testing**: Jest for unit and integration tests
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
