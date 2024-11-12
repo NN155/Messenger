@@ -1,7 +1,7 @@
 # Project Name: Messenger
 
 ## Description
-**Messenger** is a Discord app clone, inspired by Discord, that provides an intuitive interface for text messaging. The app supports real-time communication with instant messaging and group chats.
+**Messenger** is a chat application inspired by Discord, that provides an intuitive interface for text messaging. The app supports real-time communication with instant messaging and group chats.
 
 ## Features
 - **Instant Messaging**: Send and receive text messages in real time.
