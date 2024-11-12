@@ -1,7 +1,7 @@
 # Project Name: Messenger
 
 ## Description
-**Messenger** is a messaging app clone, inspired by Discord, that provides an intuitive interface for text messaging. The app supports real-time communication with instant messaging and group chats.
+**Messenger** is a Discord app clone, inspired by Discord, that provides an intuitive interface for text messaging. The app supports real-time communication with instant messaging and group chats.
 
 ## Features
 - **Instant Messaging**: Send and receive text messages in real time.
@@ -9,33 +9,68 @@
 - **Redux Architecture**: State management for a scalable app structure.
 - **Socket.io**: Real-time message handling using WebSocket.
 
-## Installation
+## Installation and Running the App
 1. Clone the repository:
     ```bash
-    git clone https://github.com/NN155/Messenger.git
+    git clone https://github.com/yourusername/messenger.git
     ```
 2. Navigate to the project directory:
     ```bash
     cd messenger
     ```
-3. Install dependencies:
+3. Create `.env` files in both the **client** and **server** directories and add necessary environment variables for each part of the app.
+
+   - For the **server**:  
+     Create a `.env` file in the `server` directory and add the following variables (replace `<your_value_here>` with your own values):
+     ```env
+     PORT=3000
+     JWT_SECRET="<your_secret_key_here>"
+     MONGODB_URI="<your_mongodb_connection_uri_here>"
+     NODE_ENV=development
+     ```
+
+   - For the **client**:  
+     Create a `.env` file in the `client` directory and add the following variables:
+     ```env
+     REACT_APP_API_URL=http://localhost:3000/api
+     REACT_APP_SOCKET_URL=http://localhost:3000
+     ```
+
+4. Run the setup command to install dependencies for both the client and server and start the app:
+    ```bash
+    npm run setup
+    ```
+
+
+## Available Scripts
+- **install:server**: Installs dependencies for the server.
+    ```bash
+    npm run install:server
+    ```
+- **install:client**: Installs dependencies for the client.
+    ```bash
+    npm run install:client
+    ```
+- **install:all**: Installs dependencies for both the server and the client.
     ```bash
     npm run install:all
     ```
-
-## Running the App
-- **Development Mode**:
+- **build:client**: Builds the client for production.
     ```bash
-    npm run dev
+    npm run build:client
     ```
-- **Build for Production**:
+- **start:server**: Starts the server.
     ```bash
-    npm run build
+    npm run start:server
     ```
-
-## Scripts
-- **Start Server**: Starts the backend server to handle requests.
-- **Start Client**: Starts the client-side app for the user interface.
+- **start**: Builds the client and starts both the client and server.
+    ```bash
+    npm run start
+    ```
+- **setup**: Installs all dependencies (client and server) and starts the app.
+    ```bash
+    npm run setup
+    ```
 
 ## Technologies Used
 - **Frontend**: React, Redux
