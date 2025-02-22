@@ -1,12 +1,14 @@
 import { addUser } from "../slices/users";
-import { addMessage } from "../slices/messages";
+import { pushMessage, unshiftMessage, setMessage } from "../slices/messages";
 
 class UserActions {
     static addUser = addUser;
 }
 
 class MessageActions {
-    static addMessage = addMessage;
+    static pushMessage = pushMessage;
+    static unshiftMessage = unshiftMessage;
+    static setMessage = setMessage;
 }
 
 class Actions {

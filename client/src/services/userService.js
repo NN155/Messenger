@@ -7,9 +7,9 @@ const USERS = "users";
 const USESR_API_URL = `${API_URL}/${USERS}`;
 
 class UserService { 
-    async getUser(params) { // userId
+    async getUser(userId) {
         try {
-            const query = queryString.stringify(params);
+            const query = queryString.stringify(userId);
             const url = `${USESR_API_URL}/get?${query}`;
             const response = await axios.get(url);
             return response.data;

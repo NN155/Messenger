@@ -8,6 +8,7 @@ export const ChatLayout = () => {
         <Grid
         templateRows="1fr auto"
         height="100%"
+        className="chat-layout"
         >
             <MessagesLayout />
             <InputLayout />
