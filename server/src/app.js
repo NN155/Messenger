@@ -10,6 +10,7 @@ const cors = require('cors');
 const app = express();
 const SocketManager = require('./socket/SocketManager');
 const socketAuthMiddleware = require('./middlewares/socketAuthMiddleware');
+require('./observers/eventListeners');
 
 connectDB();
 

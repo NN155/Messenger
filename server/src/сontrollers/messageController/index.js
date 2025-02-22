@@ -1,5 +1,5 @@
 const messageService = require('../../services/messageService');
-const SocketDispatcher = require('../../socket/SocketDispatcher');
+const eventEmitter = require('../../observers/eventEmitter');
 
 class MessageController {
     async createMessage(req, res) {
@@ -7,10 +7,10 @@ class MessageController {
         const senderId = req.userId;
         try {
             const message = await messageService.createMessage({ chatId, senderId, text });
-            await SocketDispatcher.notifyUsersByChatId('message', {
-                action: 'createMessage',
+            eventEmitter.emit('message', {
+                action: 'create',
                 payload: message
-            }, chatId);
+            });
             res.status(201).json(message);
         } catch (error) {
             res.status(500).json({ message: error.message });

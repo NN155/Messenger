@@ -11,7 +11,6 @@ const authMiddleware = async (req, res, next) => {
 
     try {
         const session = await Session.findOne({ token });
-
         if (!session) {
             return res.status(401).json({ message: 'Invalid session' });
         }
