@@ -1,33 +1,117 @@
 const User = require('../../../models/User');
 
-const validateUserData = async (data) => {
-    const { login, password, email } = data;
-    if (!login || !password || !email) {
-        throw new Error('All fields are required');
+class UserValidator {
+    constructor() {
+        this.errors = {};
     }
 
-    if (login.length < 3 || login.length > 20) {
-        throw new Error('Login must be between 3 and 20 characters long');
+    addError(field, message) {
+        if (!this.errors[field]) {
+            this.errors[field] = message;
+        }
     }
 
-    if (password.length < 6) {
-        throw new Error('Password must be at least 6 characters long');
+    getErrors() {
+        return this.errors;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        throw new Error('Invalid email format');
+    validateRequiredFields(data) {
+        const { username, password, email } = data;
+        if (!username) this.addError('username', 'Username is required');
+        if (!password) this.addError('password', 'Password is required');
+        if (!email) this.addError('email', 'Email is required');
     }
 
-    const existingEmail = await User.findOne({ email });
-    if (existingEmail) {
-        throw new Error('Email already exists');
+    validateUsernameLength(data) {
+        const { username } = data;
+        if (username.length < 3 || username.length > 32) {
+            this.addError('username', 'Username must be between 3 and 32 characters long');
+        }
     }
 
-    const existingLogin = await User.findOne({ login });
-    if (existingLogin) {
-        throw new Error('Login already exists');
+    validatePasswordLength(data) {
+        const { password } = data;
+        if (password.length < 6) {
+            this.addError('password', 'Password must be at least 6 characters long');
+        }
+        else if (password.length > 72) {
+            this.addError('password', 'Password must be at most 72 characters long');
+        }
     }
-};
 
-module.exports = validateUserData
+    validateNicknameLength(data) {
+        const { nickname } = data;
+        if (nickname && nickname.length > 32) {
+            this.addError('nickname', 'Nickname must be at most 32 characters long');
+        }
+    }
+
+    validateEmailFormat(data) {
+        const { email } = data;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            this.addError('email', 'Invalid email format');
+        }
+    }
+
+    async validateUniqueEmail(data) {
+        const { email } = data;
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
+            this.addError('email', 'Email already in use');
+        }
+    }
+
+    async validateUniqueUsername(data) {
+        const { username } = data;
+        const existingUsername = await User.findOne({ username });
+        if (existingUsername) {
+            this.addError('username', 'Username already in use');
+        }
+    }
+
+    async validate(data) {
+        this.validateRequiredFields(data);
+        if (Object.keys(this.errors).length > 0) {
+            return {
+                success: false,
+                errors: this.errors,
+                status: 400,
+            };
+        }
+
+        this.validateUsernameLength(data);
+        this.validatePasswordLength(data);
+        this.validateNicknameLength(data);
+        this.validateEmailFormat(data);
+
+        if (Object.keys(this.errors).length > 0) {
+            return {
+                success: false,
+                errors: this.errors,
+                status: 400,
+            };
+        }
+        await Promise.all([
+            this.validateUniqueEmail(data),
+            this.validateUniqueUsername(data)
+        ]);
+
+        if (Object.keys(this.errors).length > 0) {
+            return {
+                success: false,
+                errors: this.errors,
+                status: 409,
+            };
+        }
+
+        return {
+            success: true,
+            errors: {},
+            status: 200,
+        };
+    }
+
+}
+
+module.exports = UserValidator;

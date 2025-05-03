@@ -2,29 +2,29 @@ const User = require('../../../models/User');
 
 const loginUser = async (data) => {
 
-    const { loginOrEmail, password } = data;
+    const { usernameOrEmail, password } = data;
 
     try {
         const user = await User.findOne({
             $or: [
-                { login: loginOrEmail },
-                { email: loginOrEmail }
+                { username: usernameOrEmail },
+                { email: usernameOrEmail }
             ]
         });
 
         if (!user) {
-            throw new Error('Wrong login or password');
+            throw new Error('Wrong username/email or password');
         }
 
         const isPasswordValid = await user.comparePassword(password);
 
         if (!isPasswordValid) {
-            throw new Error('Wrong login or password');
+            throw new Error('Wrong username/email or password');
         } else {
             return user;
         }
     } catch (error) {
-        throw new Error('Failed to login user: ' + error.message);
+        throw new Error(error.message);
     }
 };
 

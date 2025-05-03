@@ -11,17 +11,17 @@ describe('createUser', () => {
     });
 
     it('Should successfully create a user', async () => {
-        const mockUser = { login: 'testuser', email: 'test@example.com', password: '12345', userName: 'User0001' };
+        const mockUser = { username: 'testuser', email: 'test@example.com', password: '12345', nickname: 'User0001' };
         User.create.mockResolvedValue(mockUser);
         validateUserData.mockResolvedValue(undefined);
-        const user = await createUser({ login: 'testuser', email: 'test@example.com', password: '12345'});
+        const user = await createUser({ username: 'testuser', email: 'test@example.com', password: '12345'});
 
         expect(user).toEqual(mockUser);
         expect(User.create).toHaveBeenCalledWith({
-            login: 'testuser',
+            username: 'testuser',
             email: 'test@example.com',
             password: '12345',
-            userName: expect.any(String)
+            nickname: expect.any(String)
         });
     });
 

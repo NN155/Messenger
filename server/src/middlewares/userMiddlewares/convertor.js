@@ -8,7 +8,8 @@ class Convertor {
     create = (req, res, next) => {
         try {
             req.body.email = this.__trimAndLowerCase(req.body.email);
-            req.body.login = this.__trimAndLowerCase(req.body.login);
+            req.body.username = this.__trimAndLowerCase(req.body.username);
+            req.body.nickname = req.body.nickname ? this.__trimAndLowerCase(req.body.nickname) : null;
             next();
         } catch (error) {
             return res.status(400).json({ error: error.message });
@@ -17,7 +18,7 @@ class Convertor {
 
     login = (req, res, next) => {
         try {
-            req.body.loginOrEmail = this.__trimAndLowerCase(req.body.loginOrEmail);
+            req.body.usernameOrEmail = this.__trimAndLowerCase(req.body.usernameOrEmail);
             next();
         } catch (error) {
             return res.status(400).json({ error: error.message });
