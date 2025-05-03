@@ -4,7 +4,7 @@ import { darken } from '@chakra-ui/theme-tools';
 import { Avatar, TextContent, UserInfo } from '..';
 
 const Message = ({ text, senderId, showUserInfo, createdAt }) => {
-    const { avatar, userName } = useSelector(state => state.users.usersInfo[senderId]);
+    const { avatar, nickname } = useSelector(state => state.users.usersInfo[senderId]);
     return (
         <Box
             marginTop={showUserInfo ? "20px" : 0}
@@ -22,12 +22,12 @@ const Message = ({ text, senderId, showUserInfo, createdAt }) => {
             >
                 <Avatar
                     src={avatar}
-                    name={userName}
+                    name={nickname}
                     showUserInfo={showUserInfo}
                 />
                 <Box>
                     <UserInfo
-                        userName={userName}
+                        nickname={nickname}
                         createdAt={createdAt}
                         showUserInfo={showUserInfo}
                     />

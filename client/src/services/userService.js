@@ -26,6 +26,54 @@ class UserService {
             store.dispatch(Actions.User.addUser({ id: userId, user: user }));
         }
     }
+
+    async login({password, usernameOrEmail}) {
+        try {
+            const url = `${API_URL}/users/login`;
+            const response = await axios.post(url, { usernameOrEmail, password }, {
+                withCredentials: true,
+            });
+            return response.data;
+        } catch (error) {
+            return error?.response?.data;
+        }
+    }
+
+    async register({email, nickname, username, password}) {
+        try {
+            const url = `${API_URL}/users/register`;
+            const response = await axios.post(url, { email, nickname, username, password }, {
+                withCredentials: true,
+            });
+            return response.data;
+        } catch (error) {
+            return error?.response?.data;
+        }
+    }
+
+    async auth() {
+        try {
+            const url = `${API_URL}/users/auth`;
+            const response = await axios.post(url, {},{
+                withCredentials: true,
+            });
+            return response.data;
+        } catch (error) {
+            return error?.response?.data;
+        }
+    }
+
+    async checkUsernameAvailability(username) {
+        try {
+            const url = `${API_URL}/users/check-username-availability`;
+            const response = await axios.post(url, { username }, {
+                withCredentials: true,
+            });
+            return response.data;
+        } catch (error) {
+            return error?.response?.data;
+        }
+    }
 }
 
 export default new UserService();

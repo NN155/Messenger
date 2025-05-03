@@ -24,7 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently \"cross-env PORT=3001 react-scripts start\" \"cd ../server && npm start\""
+    "dev": "concurrently \"cross-env PORT=3001 react-scripts start\" \"cd ../server && npm start\"",
+    "server": "cd ../server && npm start"
   },
   "eslintConfig": {
     "extends": [
